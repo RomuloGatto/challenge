@@ -13,7 +13,7 @@ setup: ## Setup poetry environment
 
 .PHONY: test
 test: ## Run tests locally
-	poetry run pytest --cov=src --color=yes tests/
+	poetry run pytest --cov=src --color=yes test/
 
 .PHONY: lint pre-commit
 lint | pre-commit: ## Run the pre-commit config
