@@ -86,4 +86,3 @@ class Schools:
         title = f"Results for '{query}' (search took: {round(end-start, 3)}s)"
 
         return (title, result, best_hits)
-
