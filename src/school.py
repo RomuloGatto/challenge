@@ -54,14 +54,12 @@ class Schools:
 
     def search(
         self, query: str
-    ) -> tuple[str, tuple[int, list[School]], tuple[int, list[School]]]:
+    ) -> tuple[str, list[tuple[int, School]], list[tuple[int, School]]]:
         hits = []
 
         start = time.time()
         query_prep = tuple(query.upper().split(" "))
         for school in self.school_list:
-            hit = 0
-
             to_lookup = (
                 tuple(school.SCHNAM05.split(" "))
                 + tuple(school.LCITY05.split(" "))

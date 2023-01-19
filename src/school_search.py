@@ -1,4 +1,4 @@
-from school import Schools
+from src.school import Schools
 
 
 def search_schools(query: str):

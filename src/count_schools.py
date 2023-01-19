@@ -1,4 +1,4 @@
-from school import Schools, SearchType
+from src.school import Schools, SearchType
 
 
 def print_counts():
