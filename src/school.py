@@ -1,5 +1,6 @@
 import csv
 import itertools
+import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import Callable
@@ -50,3 +51,39 @@ class Schools:
                 biggest_group = {key: grouped[key]}
 
         return biggest_group
+
+    def search(
+        self, query: str
+    ) -> tuple[str, tuple[int, list[School]], tuple[int, list[School]]]:
+        hits = []
+
+        start = time.time()
+        query_prep = tuple(query.upper().split(" "))
+        for school in self.school_list:
+            hit = 0
+
+            to_lookup = (
+                tuple(school.SCHNAM05.split(" "))
+                + tuple(school.LCITY05.split(" "))
+                + tuple(school.LSTATE05)
+            )
+
+            hit = set(query_prep).intersection(to_lookup)
+            if hit:
+                if query_prep[0] == school.LCITY05.split(" ")[0]:
+                    hit.add(school.LCITY05)
+
+                hits.append((len(hit), school))
+
+        sorted_hits = sorted(hits, key=lambda x: x[0], reverse=True)
+        result = list(filter(lambda x: x[0] == sorted_hits[0][0], hits))
+
+        best_hits = []
+        if sorted_hits[0][0] > 1:
+            best_hits = list(filter(lambda x: x[0] == sorted_hits[0][0] - 1, hits))
+
+        end = time.time()
+        title = f"Results for '{query}' (search took: {round(end-start, 3)}s)"
+
+        return (title, result, best_hits)
+
